@@ -1,48 +1,21 @@
-const { roomLookUp, getRoomConnection } = require('./room');
-
 let player = {
-  inventory: [],
-  status: roomLookUp['outside'],
+    inventory: [],
+    currentRoom: null,
 
-  examine(item) {
-    return item.description;
-  },
+    enter(newRoomStr) {
+        let newRoom = this.currentRoom.enterRoom(newRoomStr);
+        if (newRoom) {
+            this.currentRoom = this.currentRoom.enterRoom(newRoomStr);
+            return this.currentRoom.hasEnter
+                ? `${this.currentRoom.secondMessage} ${this.currentRoom.listInventory()}`
+                : this.currentRoom.entranceMessage;
+        }
+        return `Art cannot go from ${this.currentRoom.name} to ${newRoomStr}`;
+    },
 
-  read(item) {
-    return item.commands["read"];
-  },
-
-  open(message) {
-
-  },
-
-  take(item) {
-    if ()
-  },
-
-  enter(item, inputCode) {
-    if (item.checkCode(inputCode)) {
-
+    getInventoryItem(itemStr) {
+        return this.inventory.filter(item => item.name == itemStr)[0];
     }
-  },
-
-  walk(newRoomStr) {
-    let newRoom = getRoomConnection(this.status, newRoomStr)
-    if ()
-    {
-      this.status = newRoomStr;
-    }
-  }
 }
 
-let actions = {
-  take: player.take,
-  examine: player.examine,
-  open: player.open,
-  read: player.read,
-  enter: player.enter,
-  drop: player.drop,
-  walk: player.walk
-}
-
-module.exports = { player, actions };
+module.exports = { player };

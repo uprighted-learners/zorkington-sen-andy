@@ -7,19 +7,17 @@ function Room(name, roomInventory, entranceMessage, secondMessage) {
     this.secondMessage = secondMessage;
     this.hasEnter = false;
 
-    // *  * //
+    // * gets items from room inventory * //
     this.getItem = (itemStr) => {
         return this.roomInventory.filter(item => item.name == itemStr)[0];
     }
 
+    // * push item into room inventory * //
     this.insertItem = (item) => {
         this.roomInventory.push(...item);
     }
 
-    this.getConnectingRooms = () => {
-        return roomStates[this.name];
-    }
-
+    // * called from the player object, returns a connecting room * //
     this.enterRoom = (newRoomStr) => {
         if (roomStates[this.name].includes(newRoomStr)) {
             if (!this.hasEnter) this.hasEnter = true;
@@ -29,10 +27,12 @@ function Room(name, roomInventory, entranceMessage, secondMessage) {
         }
     }
 
+    // * add new paths in roomStates * //
     this.unlockPath = (newPath) => {
         roomStates[this.name].push(...newPath);
     }
 
+    // * get a string of all items in the room to display when returning to a room * //
     this.listInventory = () => {
         if (this.roomInventory.length === 0) return;
         let string = "There is ";

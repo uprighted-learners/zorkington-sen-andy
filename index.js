@@ -16,8 +16,8 @@ const title = `
 \n
 `;
 
+// * Main Menu, check for player input to start, quit, or get instructions * //
 console.log(title);
-
 let mainMenu = async () => {
 	console.log("Type [s]tart | [q]uit | [i]nstructions:\n");
 

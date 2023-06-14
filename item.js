@@ -28,7 +28,7 @@ class Item {
         return `Art took the ${this.name} out of his pockets and placed it back in.`
     }
 
-    // *  * //
+    // * remove an item from player's inventory and insertItem to the currentRoom's inventory * //
     drop(player) {
         // * Special: check if the catfood and cat are in same room. true, remove catfood from player inventory. * //
         if (this.name === "catfood"
@@ -37,6 +37,7 @@ class Item {
             player.inventory.splice(index, 1);
             return this.commands.drop;
         }
+
         let index = player.inventory.indexOf(this);
         let dropItem = player.inventory.splice(index, 1);
         if (dropItem.length !== 0) {
@@ -45,6 +46,7 @@ class Item {
         }
         return `Art don't have a ${this.name} to yeet.`;
     }
+
 
     use() {
         return this.commands.use ? this.commands.use : `Art can't use the ${this.name}.`;
@@ -78,6 +80,7 @@ class Immovable extends Item {
         super(name, description, commands);
     }
 
+    // * change default take method * //
     take() {
         return this.commands.take ? this.commands.take : `${this.name} can not be taken, what would Laim Neeson think?`;
     }
@@ -90,6 +93,7 @@ class Container extends Immovable {
         this.isOpen = false;
     }
 
+    // * sets isOpen to true, see if there are any items or rooms are unlocked * //
     open(currentRoom) {
         let message = this.commands.open;
         if (!this.isOpen) {
@@ -114,6 +118,7 @@ class Puzzle extends Immovable {
         this.unlocks = unlocks;
     }
 
+    // * will check if the secret and code are the same. Removes door from room and unlock paths * //
     use(player, code) {
         if (this.secret == code) {
             // * removes lock door from game * //
@@ -130,6 +135,7 @@ class Puzzle extends Immovable {
     }
 }
 
+// * available actions * //
 let itemActions = {
     examine: "examine",
     read: "read",

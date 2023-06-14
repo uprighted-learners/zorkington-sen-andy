@@ -49,10 +49,12 @@ async function start() {
 				player.inventory.forEach(item => console.log(item.name));
 			}
 			continue;
+		// * see all actions * //
 		} else if (actionStr === "actions" || actionStr === "ac") {
 			console.log("Art can perform these actions:");
 			Object.keys(itemActions).forEach(action => console.log(action));
 			continue;
+		// * see current room, all items in the room, all connecting rooms * //
 		} else if (actionStr === "search" || actionStr === "s") {
 			console.log(`Current Room:\n${player.currentRoom.name}`);
 			console.log("\nItems in the room:");
@@ -82,6 +84,7 @@ async function start() {
 			currentTarget = player.getInventoryItem(targetStr) || player.currentRoom.getItem(targetStr);	
 		}
 
+		// * if no item is found, display message * //
 		if (!currentTarget) {
 			console.log(`There is no ${targetStr} to ${actionStr}`);
 			continue;
